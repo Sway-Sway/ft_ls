@@ -6,7 +6,7 @@
 /*   By: jkwayiba <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 11:02:04 by jkwayiba          #+#    #+#             */
-/*   Updated: 2019/07/29 14:08:17 by jkwayiba         ###   ########.fr       */
+/*   Updated: 2019/07/29 15:26:28 by jkwayiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,30 @@ int		main(int ac, char **av)
 		{
 			pass = getpwuid(fileStat.st_uid);
 			grpss = getgrgid(fileStat.st_gid);
-			printf((S_ISDIR(fileStat.st_mode)) ? "d" : "-");
-			printf((fileStat.st_mode & S_IRUSR) ? "r" : "-");
-			printf((fileStat.st_mode & S_IWUSR) ? "w" : "-");
-			printf((fileStat.st_mode & S_IXUSR) ? "x" : "-");
-			printf((fileStat.st_mode & S_IRGRP) ? "r" : "-");
-			printf((fileStat.st_mode & S_IWGRP) ? "w" : "-");
-			printf((fileStat.st_mode & S_IXGRP) ? "x" : "-");
-			printf((fileStat.st_mode & S_IROTH) ? "r" : "-");
-			printf((fileStat.st_mode & S_IWOTH) ? "w" : "-");
-			printf((fileStat.st_mode & S_IXOTH) ? "x" : "-");
-			printf(" %s", pass->pw_name);
-			printf(" %s", grpss->gr_name);
+			ft_putstr((S_ISDIR(fileStat.st_mode)) ? "d" : "-");
+			ft_putstr((fileStat.st_mode & S_IRUSR) ? "r" : "-");
+			ft_putstr((fileStat.st_mode & S_IWUSR) ? "w" : "-");
+			ft_putstr((fileStat.st_mode & S_IXUSR) ? "x" : "-");
+			ft_putstr((fileStat.st_mode & S_IRGRP) ? "r" : "-");
+			ft_putstr((fileStat.st_mode & S_IWGRP) ? "w" : "-");
+			ft_putstr((fileStat.st_mode & S_IXGRP) ? "x" : "-");
+			ft_putstr((fileStat.st_mode & S_IROTH) ? "r" : "-");
+			ft_putstr((fileStat.st_mode & S_IWOTH) ? "w" : "-");
+			ft_putstr((fileStat.st_mode & S_IXOTH) ? "x" : "-");
+			ft_putchar(' ');
+			ft_putstr(ft_itoa(fileStat.st_nlink));
+			ft_putchar(' ');
+			ft_putstr(pass->pw_name);
+			ft_putchar(' ');
+			ft_putstr(grpss->gr_name);
+			ft_putchar(' ');
+			ft_putstr(ft_itoa(fileStat.st_size));
+			ft_putchar(' ');
+			ft_putstr((ft_strsub((ctime(&fileStat.st_mtime)),4,12)));
+			ft_putchar(' ');
 		}
-		printf(" %s\n", sd->d_name);
+		ft_putstr(sd->d_name);
+		ft_putchar('\n');
 	}
 	closedir(dir);
 	return (0);
