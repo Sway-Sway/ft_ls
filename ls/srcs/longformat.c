@@ -15,7 +15,7 @@ void	longformat(char *path)
 		ft_putendl("Error! Unable to open directory.\n");
 		exit(1);
 	}
-	while ((sd = readir(dir)) != NULL)
+	while ((dp = readir(dir)) != NULL)
 	{
 		ft_strcpy(fullpath, path);
 		ft_strcat(fullpath, "/");

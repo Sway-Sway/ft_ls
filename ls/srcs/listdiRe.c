@@ -1,14 +1,14 @@
-#include "ft_ls.h"
+#include "../includes/ft_ls.h"
 
 void	listfilesrecursively(char *basepath)
 {
-	char path[1000];
+	char path[1000]; //char *path;
 	struct dirent *dp;
 	DIR *dir = opendir(basepath);
 
 	if (!dir)
 		return ;
-	while((dp = readir(dir)) != NULL)
+	while ((dp = readdir(dir)) != NULL)
 	{
 		if (ft_strcmp(dp->d_name, ".") != 0 && ft_strcmp(dp->d_name, "..") != 0)
 		{
@@ -20,4 +20,18 @@ void	listfilesrecursively(char *basepath)
 		}
 	}
 	closedir(dir);
+}
+
+
+int		main(int ac, char **av)
+{
+	if (ac == 3)
+	{
+		if (ft_strcmp(av[1], "-R") == 0)
+		{
+			listfilesrecursively(av[2]);
+		}
+	}
+	else 
+	return (0);
 }
