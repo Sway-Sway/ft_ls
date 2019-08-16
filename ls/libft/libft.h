@@ -6,7 +6,7 @@
 /*   By: jkwayiba <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/24 09:27:28 by jkwayiba          #+#    #+#             */
-/*   Updated: 2019/06/25 00:22:37 by jkwayiba         ###   ########.fr       */
+/*   Updated: 2019/08/16 12:20:05 by jkwayiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 int		ft_strequ(char const *s1, char const *s2);
 int		ft_strnequ(char const *s1, char const *s2, size_t n);
 char	*ft_strsub(char const *s, unsigned int start, size_t len);
+int		ft_strchr_index(char *s, int c);
 size_t	ft_nbrlen(long n);
 void	ft_swap(int *a, int *b);
 char	*ft_strrev(char *str);
