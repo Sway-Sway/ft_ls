@@ -31,7 +31,10 @@ int		main(int ac, char **av)
 		{
 			listfilesrecursively(av[2]);
 		}
-	}
-	else 
+		else if (ft_strcmp(av[1], "l") == 0)
+		{
+			listfiles(av[2]);
+		}
+	} 
 	return (0);
 }

@@ -1,9 +1,9 @@
-#include "ft_ls.h"
+#include "../includes/ft_ls.h"
 
-void	listfiles(char *path)
+void	listfiles(char *basepath)
 {
 	struct dirent *dp;
-	DIR *dir = openddir(path);
+	DIR *dir = opendir(basepath);
 
 	if (!dir)
 		return ;
@@ -13,3 +13,15 @@ void	listfiles(char *path)
 	}
 	closedir(dir);
 }
+
+//int		main(int ac, char **av)
+//{
+//	if (ac == 3)
+//	{
+//		if (ft_strcmp(av[1], "-l") == 0)
+//		{
+//			listfiles(av[2]);
+//		}
+//	}
+//	return (0);
+//}
