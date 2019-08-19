@@ -1,3 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   longformat.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jkwayiba <jkwayiba@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/08/19 17:08:44 by jkwayiba          #+#    #+#             */
+/*   Updated: 2019/08/19 17:55:43 by jkwayiba         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+
 #include "../includes/ft_ls.h"
 
 struct stat     filestat;
@@ -51,12 +64,14 @@ void	longformat(char *path, files *node)
 int main(void)
 {
 	struct files *new;
-	if (!(new = (files *)malloc(sizeof(files))))
-		return (0);
-	new->next = NULL;
-	longformat(".", new);
-	ft_putendl(new->permissions);
-	ft_putendl(new->user);
-	ft_putendl(new->group);
+	
+	new = NULL;
+	ft_lstcr(&new, ".");
+	 ft_putstr(new->permissions);
+	// ft_putchar(' ');
+	// ft_putstr(new->user);
+	// ft_putchar(' ');
+	// ft_putstr(new->group);
+	// ft_putchar(' ');
 	return (0);
 }
