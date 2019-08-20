@@ -6,7 +6,7 @@
 /*   By: jkwayiba <jkwayiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 17:08:44 by jkwayiba          #+#    #+#             */
-/*   Updated: 2019/08/20 14:51:14 by jkwayiba         ###   ########.fr       */
+/*   Updated: 2019/08/20 17:19:50 by jkwayiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ struct group    *grpss;
 void	longformat(char *path)
 {
 	struct	dirent	*dp;
-	struct	stat	filestat;
 	files	*node;
 	char	*fullpath; //this might be an issue
 	char	*temp;
@@ -34,7 +33,6 @@ void	longformat(char *path)
 	}
 	while ((dp = readdir(dir)))
 	{	
-		// ft_str(fullpath, path);
 		temp = ft_strdup(path);
 		ft_strcat(temp, "/");
 		fullpath = ft_strjoin(temp, dp->d_name);
@@ -45,21 +43,20 @@ void	longformat(char *path)
 			node->permissions[0] = (S_ISDIR(filestat.st_mode) ? 'd' : '-');
 			ft_putstr(node->permissions);
 			ft_putchar(' ');
+			ft_putnbr(node->links);
+			ft_putchar(' ');
 			ft_putstr(node->user);
 			ft_putchar(' ');
 			ft_putstr(node->group);
 		 	ft_putchar(' ');
 			 ft_putnbr(node->filesize);
 		 	ft_putchar(' ');
+			//ft_putstr(node->date); //!!!!!!!!!!!!!
+			ft_putchar(' ');
 			ft_putendl(node->name);	 
-		// 	ft_putstr(ft_itoa(filestat.st_size));
 		// 	ft_putchar(' ');
-		// 	ft_putstr((ft_strsub((ctime(&filestat.st_mtime)),4,12)));
-		// 	ft_putchar(' ');
-		// }
-		// ft_putstr(dp->d_name);
 		//ft_putchar('\n');
-	}
+		}
 }
 free(fullpath);
 closedir(dir);
