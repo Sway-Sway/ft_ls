@@ -6,37 +6,26 @@
 /*   By: jkwayiba <jkwayiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 17:19:55 by jkwayiba          #+#    #+#             */
-/*   Updated: 2019/08/19 17:58:50 by jkwayiba         ###   ########.fr       */
+/*   Updated: 2019/08/20 14:33:35 by jkwayiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
 
-files    *lstnew(files *new)
+
+files   *items_lst(struct stat filestat, struct dirent *dp)
 {
-    new = (files *)malloc(sizeof(files));
+    files *new;
+    struct group *grpss;
+    struct passwd *pass;
+    
+    new = malloc(sizeof(files));
+    new->name = ft_strdup(dp->d_name);
+    get_uid(filestat, new);
+    get_guid(filestat, new);
+    get_perms(filestat, new);
+    new->filesize = filestat.st_size;
+    // new->date = 
     new->next = NULL;
     return (new);
-}
-void    lstadd(files **first, files *new)
-{
-    new->next = *first;
-}
-void    ft_lstcr(files **first, char *path)
-{
-    files *node = NULL;
-    
-    if (!first)
-    {
-        *first = lstnew(*first);
-        longformat(path, *first);
-        return; 
-    }
-    else
-    {
-        node = lstnew(*first);
-        longformat(path, node);
-        lstadd(first, node);
-    }
-    
 }

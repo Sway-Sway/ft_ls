@@ -6,7 +6,7 @@
 /*   By: jkwayiba <jkwayiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 17:08:44 by jkwayiba          #+#    #+#             */
-/*   Updated: 2019/08/19 17:55:43 by jkwayiba         ###   ########.fr       */
+/*   Updated: 2019/08/20 14:51:14 by jkwayiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,13 @@ struct stat     filestat;
 struct passwd   *pass;
 struct group    *grpss;
 
-void	longformat(char *path, files *node)
+void	longformat(char *path)
 {
 	struct	dirent	*dp;
 	struct	stat	filestat;
-	char	fullpath[1000];
+	files	*node;
+	char	*fullpath; //this might be an issue
+	char	*temp;
 	DIR		*dir;
 
 	dir = opendir(path);
@@ -30,25 +32,26 @@ void	longformat(char *path, files *node)
 		ft_putendl("Error! Unable to open directory.\n");
 		exit(1);
 	}
-	while ((dp = readdir(dir)) != NULL)
-	{
-		ft_strcpy(fullpath, path);
-		ft_strcat(fullpath, "/");
-		ft_strcat(fullpath, dp->d_name);
-
+	while ((dp = readdir(dir)))
+	{	
+		// ft_str(fullpath, path);
+		temp = ft_strdup(path);
+		ft_strcat(temp, "/");
+		fullpath = ft_strjoin(temp, dp->d_name);
+		free(temp);
 		if (!stat(fullpath, &filestat))
-		{
-			get_uid(filestat, node);
-			get_guid(filestat, node);
+		{				
+			node = items_lst(filestat, dp);
 			node->permissions[0] = (S_ISDIR(filestat.st_mode) ? 'd' : '-');
-			get_perms(filestat, node);
-		// 	ft_putchar(' ');
-		// 	ft_putstr(ft_itoa(filestat.st_nlink));
-		// 	ft_putchar(' ');
-		// 	ft_putstr(pass->pw_name);
-		// 	ft_putchar(' ');
-		// 	ft_putstr(grpss->gr_name);
-		// 	ft_putchar(' ');
+			ft_putstr(node->permissions);
+			ft_putchar(' ');
+			ft_putstr(node->user);
+			ft_putchar(' ');
+			ft_putstr(node->group);
+		 	ft_putchar(' ');
+			 ft_putnbr(node->filesize);
+		 	ft_putchar(' ');
+			ft_putendl(node->name);	 
 		// 	ft_putstr(ft_itoa(filestat.st_size));
 		// 	ft_putchar(' ');
 		// 	ft_putstr((ft_strsub((ctime(&filestat.st_mtime)),4,12)));
@@ -57,17 +60,19 @@ void	longformat(char *path, files *node)
 		// ft_putstr(dp->d_name);
 		//ft_putchar('\n');
 	}
-	closedir(dir);
 }
+free(fullpath);
+closedir(dir);
 }
 
 int main(void)
 {
 	struct files *new;
-	
+	struct dirent *dp;
+
 	new = NULL;
-	ft_lstcr(&new, ".");
-	 ft_putstr(new->permissions);
+	longformat(".");
+	//ft_lstcr(&new, ".");
 	// ft_putchar(' ');
 	// ft_putstr(new->user);
 	// ft_putchar(' ');
