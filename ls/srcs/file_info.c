@@ -6,7 +6,7 @@
 /*   By: jkwayiba <jkwayiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 17:08:28 by jkwayiba          #+#    #+#             */
-/*   Updated: 2019/08/27 12:19:15 by jkwayiba         ###   ########.fr       */
+/*   Updated: 2019/08/27 17:52:36 by jkwayiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,7 @@ void    get_perms(struct stat filestat, files *node)
 }
 
 
-//char    get_time(struct stat filestat, files *node)
+void    total_blocks(struct stat filestat, files *node)
+{
+        node->blocks += filestat.st_blocks;
+}

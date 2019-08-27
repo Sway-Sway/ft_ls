@@ -6,7 +6,7 @@
 /*   By: jkwayiba <jkwayiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 17:08:44 by jkwayiba          #+#    #+#             */
-/*   Updated: 2019/08/27 15:06:11 by jkwayiba         ###   ########.fr       */
+/*   Updated: 2019/08/27 17:16:57 by jkwayiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	longformat(char *path)
 		if (!stat(fullpath, &filestat))
 		{				
 			node = items_lst(filestat, dp);
+			ft_putendl(ft_strjoin("total ", ft_itoa(node->blocks)));
 			node->permissions[0] = (S_ISDIR(filestat.st_mode) ? 'd' : '-');
 			ft_putstr(node->permissions);
 			ft_putchar(' ');
