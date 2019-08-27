@@ -6,7 +6,7 @@
 /*   By: jkwayiba <jkwayiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 17:08:28 by jkwayiba          #+#    #+#             */
-/*   Updated: 2019/08/20 17:00:41 by jkwayiba         ###   ########.fr       */
+/*   Updated: 2019/08/27 12:19:15 by jkwayiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,3 +50,6 @@ void    get_perms(struct stat filestat, files *node)
 			node->permissions[9] = (filestat.st_mode & S_IXOTH) ? 'x' : '-';
             node->permissions[10] = '\0';
 }
+
+
+//char    get_time(struct stat filestat, files *node)
