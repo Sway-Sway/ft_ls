@@ -2,7 +2,7 @@
 
 void	listfilesrecursively(char *basepath)
 {
-	char path[1000]; //char *path;
+	files *path; //char *path;
 	struct dirent *dp;
 	DIR *dir = opendir(basepath);
 
@@ -33,7 +33,7 @@ int		main(int ac, char **av)
 		}
 		else if (ft_strcmp(av[1], "l") == 0)
 		{
-			listfiles(av[2]);
+			longformat(av[2]);
 		}
 	} 
 	return (0);

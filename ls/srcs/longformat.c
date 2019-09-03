@@ -6,7 +6,7 @@
 /*   By: jkwayiba <jkwayiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 17:08:44 by jkwayiba          #+#    #+#             */
-/*   Updated: 2019/08/27 17:16:57 by jkwayiba         ###   ########.fr       */
+/*   Updated: 2019/09/03 15:06:06 by jkwayiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,22 +25,26 @@ void	longformat(char *path)
 	char	*temp;
 	DIR		*dir;
 
+	dp = NULL;
 	dir = opendir(path);
 	if (!dir)
 	{
 		ft_putendl("Error! Unable to open directory.\n");
 		exit(1);
 	}
+	//ft_putstr("total ");
+	//total_blocks(node);
+	//ft_putchar('\n');
+	print_blocks(node);
 	while ((dp = readdir(dir)))
-	{	
-		temp = ft_strdup(path);
-		ft_strcat(temp, "/");
-		fullpath = ft_strjoin(temp, dp->d_name);
-		free(temp);
-		if (!stat(fullpath, &filestat))
-		{				
-			node = items_lst(filestat, dp);
-			ft_putendl(ft_strjoin("total ", ft_itoa(node->blocks)));
+	{		
+			if (!node)
+			 	node = items_lst(dp, temp);
+			else
+			 	add_list(&node, dp, path);
+			//ft_putendl(ft_strjoin("total ", ft_itoa(node->blocks)));
+			//total_blocks(node);
+			
 			node->permissions[0] = (S_ISDIR(filestat.st_mode) ? 'd' : '-');
 			ft_putstr(node->permissions);
 			ft_putchar(' ');
@@ -51,28 +55,22 @@ void	longformat(char *path)
 			ft_putstr(node->group);
 		 	ft_putchar(' ');
 			ft_putnbr(node->filesize);
-		 	ft_putchar(' ');
+		 	ft_putchar('\t');
 			ft_putstr(node->date);
 			ft_putchar(' ');
-			ft_putendl(node->name);	
-		}
+			ft_putendl(node->name);
+			free(node);
 }
-free(fullpath);
+//clear_list(node);
 closedir(dir);
 }
 
-int main(void)
+int main(int ac, char **av)
 {
 	struct files *new;
 	struct dirent *dp;
 
 	new = NULL;
-	longformat(".");
-	//ft_lstcr(&new, ".");
-	// ft_putchar(' ');
-	// ft_putstr(new->user);
-	// ft_putchar(' ');
-	// ft_putstr(new->group);
-	// ft_putchar(' ');
+	longformat(av[1]);
 	return (0);
-}
+}	

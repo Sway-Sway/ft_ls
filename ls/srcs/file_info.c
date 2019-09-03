@@ -6,7 +6,7 @@
 /*   By: jkwayiba <jkwayiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 17:08:28 by jkwayiba          #+#    #+#             */
-/*   Updated: 2019/08/27 17:52:36 by jkwayiba         ###   ########.fr       */
+/*   Updated: 2019/09/03 15:04:11 by jkwayiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,53 @@ void    get_perms(struct stat filestat, files *node)
             node->permissions[10] = '\0';
 }
 
-
-void    total_blocks(struct stat filestat, files *node)
+/*void    total_blocks(files *node)
 {
-        node->blocks += filestat.st_blocks;
+    int i;
+    files   *ptr;
+
+    i = 0;
+    ptr = node;
+    while (ptr)
+    {
+        i += ptr->blocks;
+        ptr = ptr->next;
+    }
+    ft_putnbr(i); 
+}*/
+
+void  print_blocks(files *list)
+{
+    struct stat filestat;
+    files   *num;
+    unsigned long block;
+
+    num = list;
+    block = 0;
+    while (num)
+    {
+        if (stat(num->name, &filestat))
+            return ;
+        block = block + (filestat.st_blocks);
+        num = num->next;
+    }
+    ft_putstr("total :");
+    ft_putnbr(block);
+    ft_putchar('\n');
 }
+
+/*void    total_blocks(struct stat filestat, files *node)
+{
+    int i;
+
+    i = 0;
+    while (node)
+    {
+        if (node->name[0] != '.')
+        i += node->blocks;
+        node = node->next;
+    }
+    //return (i);
+    ft_putnbr(i);
+    ft_putchar('\n');
+}*/
