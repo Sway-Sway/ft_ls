@@ -6,7 +6,7 @@
 /*   By: jkwayiba <jkwayiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 11:01:24 by jkwayiba          #+#    #+#             */
-/*   Updated: 2019/08/27 17:53:05 by jkwayiba         ###   ########.fr       */
+/*   Updated: 2019/09/03 15:03:59 by jkwayiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@
     int     filesize;
     char    *date;
     int     blocks;
-
-    //struct     stat    stats;
     struct     files   *next;
 }   files;
 
@@ -54,7 +52,10 @@ void    get_uid(struct stat filestat, files *node);
 void    get_guid(struct stat filestat, files *group);
 void    get_perms(struct stat filestat, files *files);
 void    ft_lstcr(files **first, char *path);
-void    total_blocks(struct stat filestat, files *node);
-files   *items_lst(struct stat filestat, struct dirent *dp);
+//void    total_blocks(files *node);
+void    print_blocks(files *list);
+files   *items_lst(struct dirent *dp, char *path);
+void    add_list(files **list, struct dirent *dp, char *path);
+void    clear_list(files *list);
 
 #endif
