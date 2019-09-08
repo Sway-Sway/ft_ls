@@ -11,11 +11,13 @@ void	listfilesrecursively(char *basepath)
 	while ((dp = readdir(dir)) != NULL)
 	{
 		node = items_lst(dp, basepath);
-		if (ft_strcmp(node->name, ".") != 0 && ft_strcmp(node->name, "..") != 0)
+		if (dp->d_type == DT_DIR && ft_strcmp(node->name, ".") != 0 && ft_strcmp(node->name, "..") != 0)
 		{
 			add_list(&node, dp, basepath);
-			ft_putendl(node->path);
+			ft_putendl(node->name);
+			longformat(node->path);
 			listfilesrecursively(node->path);
+			//longformat(node->name);
 		}
 	}
 	clear_list(node);
