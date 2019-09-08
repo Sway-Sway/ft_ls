@@ -6,7 +6,7 @@
 /*   By: jkwayiba <jkwayiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 11:01:24 by jkwayiba          #+#    #+#             */
-/*   Updated: 2019/09/03 15:03:59 by jkwayiba         ###   ########.fr       */
+/*   Updated: 2019/09/08 04:17:32 by jkwayiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,11 @@
 # include <pwd.h>
 # include <grp.h>
 
-/*typedef struct  file_info {
-    struct dirent   *dp;
-    struct stat     filestat;
-    struct passwd   *pass;
-    struct group    *grpss;
-    struct file_info *next;
-}                   filestats;
-*/
+
+struct dirent   *dp;
+struct stat     filestat;
+struct passwd   *pass;
+struct group    *grpss;
 
  typedef struct      files {
     char    *name;
@@ -53,7 +50,7 @@ void    get_guid(struct stat filestat, files *group);
 void    get_perms(struct stat filestat, files *files);
 void    ft_lstcr(files **first, char *path);
 //void    total_blocks(files *node);
-void    print_blocks(files *list);
+void    print_blocks(files *node);
 files   *items_lst(struct dirent *dp, char *path);
 void    add_list(files **list, struct dirent *dp, char *path);
 void    clear_list(files *list);
