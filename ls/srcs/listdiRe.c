@@ -14,10 +14,10 @@ void	listfilesrecursively(char *basepath)
 		if (dp->d_type == DT_DIR && ft_strcmp(node->name, ".") != 0 && ft_strcmp(node->name, "..") != 0)
 		{
 			add_list(&node, dp, basepath);
-			ft_putendl(node->name);
+			ft_putendl(node->path);
 			longformat(node->path);
+			ft_putchar('\n');
 			listfilesrecursively(node->path);
-			//longformat(node->name);
 		}
 	}
 	clear_list(node);

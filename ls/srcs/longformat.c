@@ -6,7 +6,7 @@
 /*   By: jkwayiba <jkwayiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 17:08:44 by jkwayiba          #+#    #+#             */
-/*   Updated: 2019/09/08 10:08:05 by jkwayiba         ###   ########.fr       */
+/*   Updated: 2019/09/08 10:24:36 by jkwayiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,7 @@ void	longformat(char *path)
 		ft_putstr(node->date);
 		ft_putchar(' ');
 		ft_putendl(node->name);
-		//longformat(node->path);
-		//free(node);
-		
+		free(node);
 	}
 	closedir(dir);
 }
