@@ -6,7 +6,7 @@
 /*   By: jkwayiba <jkwayiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 17:19:55 by jkwayiba          #+#    #+#             */
-/*   Updated: 2019/09/03 15:51:39 by jkwayiba         ###   ########.fr       */
+/*   Updated: 2019/09/08 04:19:17 by jkwayiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ files   *items_lst(struct dirent *dp, char *path)
     files       *new;
     char        *fullpath;
     char        *path2;
-    struct stat filestat;
     
     if (!(new = malloc(sizeof(files))))
         return (NULL);
-    path2 = ft_strjoin(path, "/"); //maybe use strjoin
-    fullpath = ft_strcat(path2 , dp->d_name);
-    stat(path2, &filestat);
+    path2 = ft_strjoin(path, "/");
+    fullpath = ft_strjoin(path2 , dp->d_name);
+    lstat(fullpath, &filestat);
+    new->path = fullpath;
     new->name = ft_strdup(dp->d_name);
     new->links = filestat.st_nlink;
     get_uid(filestat, new);
@@ -32,10 +32,9 @@ files   *items_lst(struct dirent *dp, char *path)
     get_perms(filestat, new);
     new->filesize = filestat.st_size;
     new->date = ft_strsub((ctime(&filestat.st_mtime)), 4, 12);
-    //total_blocks(new);
     new->blocks = filestat.st_blocks;
     new->next = NULL;
-    free(path2);
+    //free(path2);
     //free(fullpath);
     return (new);
 }
@@ -58,7 +57,7 @@ void    clear_list(files *list)
         head = list;
         list = list->next;
         free(head->name);
-        free(head->user);        
+        free(head->date);     
         free(head);
     }
 }

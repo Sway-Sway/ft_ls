@@ -2,7 +2,7 @@
 
 void	listfilesrecursively(char *basepath)
 {
-	files *path; //char *path;
+	files *node;
 	struct dirent *dp;
 	DIR *dir = opendir(basepath);
 
@@ -10,15 +10,15 @@ void	listfilesrecursively(char *basepath)
 		return ;
 	while ((dp = readdir(dir)) != NULL)
 	{
-		if (ft_strcmp(dp->d_name, ".") != 0 && ft_strcmp(dp->d_name, "..") != 0)
+		node = items_lst(dp, basepath);
+		if (ft_strcmp(node->name, ".") != 0 && ft_strcmp(node->name, "..") != 0)
 		{
-			ft_putendl(dp->d_name);
-			ft_strcpy(path, basepath);
-			ft_strcat(path, "/");
-			ft_strcat(path, dp->d_name);
-			listfilesrecursively(path);
+			add_list(&node, dp, basepath);
+			ft_putendl(node->path);
+			listfilesrecursively(node->path);
 		}
 	}
+	clear_list(node);
 	closedir(dir);
 }
 
@@ -34,6 +34,10 @@ int		main(int ac, char **av)
 		else if (ft_strcmp(av[1], "l") == 0)
 		{
 			longformat(av[2]);
+		}
+		else if (ft_strcmp(av[1], "  ") == 0)
+		{
+			listfiles(av[2]);
 		}
 	} 
 	return (0);

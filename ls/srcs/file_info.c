@@ -6,7 +6,7 @@
 /*   By: jkwayiba <jkwayiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 17:08:28 by jkwayiba          #+#    #+#             */
-/*   Updated: 2019/09/03 15:04:11 by jkwayiba         ###   ########.fr       */
+/*   Updated: 2019/09/08 04:20:44 by jkwayiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 
 void    get_uid(struct stat filestat, files *node)
 {
-    struct passwd *pass;
-
     pass = getpwuid(filestat.st_uid);
     if (pass)
         node->user = ft_strdup(pass->pw_name);
@@ -27,9 +25,7 @@ void    get_uid(struct stat filestat, files *node)
 }
 
 void   get_guid(struct stat filestat, files *node)
-{
-    struct group *grpss;
-
+{  
     grpss = getgrgid(filestat.st_gid);
     if (grpss)
         node->group = ft_strdup(grpss->gr_name);
@@ -66,22 +62,22 @@ void    get_perms(struct stat filestat, files *node)
     ft_putnbr(i); 
 }*/
 
-void  print_blocks(files *list)
+void  print_blocks(files *node)
 {
-    struct stat filestat;
     files   *num;
+    struct stat filestat;
     unsigned long block;
 
-    num = list;
+    //node->blocks = filestat.st_blocks;
     block = 0;
     while (num)
     {
-        if (stat(num->name, &filestat))
+        if (!lstat(node->name, &filestat))
             return ;
         block = block + (filestat.st_blocks);
         num = num->next;
     }
-    ft_putstr("total :");
+    ft_putstr("total ");
     ft_putnbr(block);
     ft_putchar('\n');
 }
