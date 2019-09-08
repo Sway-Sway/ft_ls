@@ -6,7 +6,7 @@
 /*   By: jkwayiba <jkwayiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 17:08:28 by jkwayiba          #+#    #+#             */
-/*   Updated: 2019/09/08 04:20:44 by jkwayiba         ###   ########.fr       */
+/*   Updated: 2019/09/08 04:32:17 by jkwayiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void   get_guid(struct stat filestat, files *node)
 
 void    get_perms(struct stat filestat, files *node)
 {
+            node->permissions[0] = (S_ISDIR(filestat.st_mode) ? 'd' : '-');
             node->permissions[1] = (filestat.st_mode & S_IRUSR) ? 'r' : '-';
 			node->permissions[2] = (filestat.st_mode & S_IWUSR) ? 'w' : '-';
 			node->permissions[3] = (filestat.st_mode & S_IXUSR) ? 'x' : '-';

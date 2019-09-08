@@ -6,19 +6,17 @@
 /*   By: jkwayiba <jkwayiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 17:08:44 by jkwayiba          #+#    #+#             */
-/*   Updated: 2019/09/08 04:19:28 by jkwayiba         ###   ########.fr       */
+/*   Updated: 2019/09/08 04:32:25 by jkwayiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../includes/ft_ls.h"
 
 void	longformat(char *path)
 {
 	files	*node;
-	DIR		*dir;
-
-	dp = NULL;
+	DIR	*dir;
+	
 	dir = opendir(path);
 	if (!dir)
 	{
@@ -26,27 +24,25 @@ void	longformat(char *path)
 		exit(1);
 	}
 	while ((dp = readdir(dir)))
-	{		
-			if (!node)
-			 	node = items_lst(dp, path);
-			else
-			 	add_list(&node, dp, path);
-			node->permissions[0] = (S_ISDIR(filestat.st_mode) ? 'd' : '-');
-			ft_putstr(node->permissions);
-			ft_putchar(' ');
-			ft_putnbr(node->links);
-			ft_putchar(' ');
-			ft_putstr(node->user);
-			ft_putchar(' ');
-			ft_putstr(node->group);
-		 	ft_putchar(' ');
-			ft_putnbr(node->filesize);
-		 	ft_putchar('\t');
-			ft_putstr(node->date);
-			ft_putchar(' ');
-			ft_putendl(node->name);
-			free(node);
+	{
+		if (!node)
+		node = items_lst(dp, path);
+		else
+		add_list(&node, dp, path);
+		ft_putstr(node->permissions);
+		ft_putchar(' ');
+		ft_putnbr(node->links);
+		ft_putchar(' ');
+		ft_putstr(node->user);
+		ft_putchar(' ');
+		ft_putstr(node->group);
+		ft_putchar(' ');
+		ft_putnbr(node->filesize);
+		ft_putchar('\t');
+		ft_putstr(node->date);
+		ft_putchar(' ');
+		ft_putendl(node->name);
+		free(node);
 	}
-//clear_list(node);
-closedir(dir);
+	closedir(dir);
 }
