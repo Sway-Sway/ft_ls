@@ -6,7 +6,7 @@
 /*   By: jkwayiba <jkwayiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 17:19:55 by jkwayiba          #+#    #+#             */
-/*   Updated: 2019/09/08 04:19:17 by jkwayiba         ###   ########.fr       */
+/*   Updated: 2019/09/13 20:13:32 by jkwayiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,24 @@ void    clear_list(files *list)
         free(head->date);     
         free(head);
     }
+}
+
+void	reverse_list(files **head)
+{
+	files *current;
+	files *previous;
+	files *next;
+
+	next = NULL;
+	previous = NULL;
+	current = *head;
+	while (current != NULL)
+	{
+
+		next = current->next;
+		current->next = previous;
+		previous = current;
+		current = next;
+	}
+	*head = previous;
 }
