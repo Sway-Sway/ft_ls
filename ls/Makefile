@@ -9,6 +9,8 @@ SRCS = file_info.c \
 	   listdir.c \
 	   listdiRe.c \
 	   longformat.c \
+	   sorting.c \
+	   print_list.c \
 
 FLAGS = -Wall -Werror -Wextra
 
