@@ -6,7 +6,7 @@
 /*   By: jkwayiba <jkwayiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 11:01:24 by jkwayiba          #+#    #+#             */
-/*   Updated: 2019/09/08 04:17:32 by jkwayiba         ###   ########.fr       */
+/*   Updated: 2019/09/16 12:46:52 by jkwayiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,11 @@ void    ft_lstcr(files **first, char *path);
 void    print_blocks(files *node);
 files   *items_lst(struct dirent *dp, char *path);
 void    add_list(files **list, struct dirent *dp, char *path);
+void    reverse_list(files **head);
 void    clear_list(files *list);
+void    merge_sort(files **head_ref);
+files   *SortedMerge(files *a, files *b);
+void    FrontBackSplit(files *source, files **front_ref, files **back_ref);
+void    print_dir(files *node);
 
 #endif
