@@ -11,7 +11,8 @@ void	listfilesrecursively(char *basepath)
 	while ((dp = readdir(dir)) != NULL)
 	{
 		node = items_lst(dp, basepath);
-		if (dp->d_type == DT_DIR && ft_strcmp(node->name, ".") != 0 && ft_strcmp(node->name, "..") != 0)
+		if (dp->d_type == DT_DIR && ft_strcmp(&node->name[0], ".") != 0 &&
+		 ft_strcmp(&node->name[0], "..") != 0)
 		{
 			add_list(&node, dp, basepath);
 			ft_putendl(node->path);
@@ -29,7 +30,7 @@ int		main(int ac, char **av)
 {
 	if (ac == 3)
 	{
-		if (ft_strcmp(av[1], "-R") == 0)
+		if (ft_strcmp(av[1], "R") == 0)
 		{
 			listfilesrecursively(av[2]);
 		}

@@ -6,7 +6,7 @@
 /*   By: jkwayiba <jkwayiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 17:08:44 by jkwayiba          #+#    #+#             */
-/*   Updated: 2019/09/08 10:24:36 by jkwayiba         ###   ########.fr       */
+/*   Updated: 2019/09/10 11:47:32 by jkwayiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	longformat(char *path)
 		ft_putstr(node->permissions);
 		ft_putchar(' ');
 		ft_putnbr(node->links);
-		ft_putchar(' ');
+		ft_putchar('\t');
 		ft_putstr(node->user);
 		ft_putchar(' ');
 		ft_putstr(node->group);

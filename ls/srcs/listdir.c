@@ -4,18 +4,26 @@ void	listfiles(char *basepath)
 {
 	files *node;
 	DIR *dir = opendir(basepath);
-
+	
+	node = NULL;
 	if (!dir)
 		return ;
 	while ((dp = readdir(dir)) != NULL)
 	{
-		node = items_lst(dp, basepath);
-		if (ft_strcmp(node->name, ".") != 0 && ft_strcmp(node->name, "..") != 0)
-		{
-			add_list(&node, dp, basepath);
-			ft_putendl(node->name);
+		if (ft_strcmp(dp->d_name, ".") != 0 && ft_strcmp(dp->d_name, "..") != 0)
+		{	
+			if (node == NULL)
+			{
+				node = items_lst(dp, basepath);
+			}
+			else {
+				add_list(&node, dp, basepath);
+			}
 		}
 	}
-	clear_list(node);
 	closedir(dir);
+	merge_sort(&node);
+	reverse_list(&node);
+	print_dir(node);
+	clear_list(node);
 }
