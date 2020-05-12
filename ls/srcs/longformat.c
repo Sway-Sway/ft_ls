@@ -6,7 +6,7 @@
 /*   By: jkwayiba <jkwayiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 17:08:44 by jkwayiba          #+#    #+#             */
-/*   Updated: 2020/05/12 02:07:17 by groovyswa        ###   ########.fr       */
+/*   Updated: 2020/05/12 03:51:08 by groovyswa        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ void	print_list(files *list, unsigned char flags)
 	while (ptr != NULL)
 	{
 		if (flags & 2)
-			longformat(ptr); //longformat(ptr, path, flags)
+			longformat(ptr);
 		else if (ft_strncmp(ptr->name, ".", 1) != 0)
-			longformat(ptr); //longformat(ptr, path, flags)
+			longformat(ptr);
 		ptr = ptr->next;
 	}
 }

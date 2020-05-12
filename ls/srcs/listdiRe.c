@@ -32,7 +32,6 @@ void	listfilesrecursively(files *list, char *basepath, unsigned char flags)
 
 void	ft_ls(char *path, unsigned char flags)
 {
-	//struct dirent	*dp;
 	files			*initial;
 	DIR				*dr;
 
@@ -49,7 +48,6 @@ void	ft_ls(char *path, unsigned char flags)
 			add_list(&initial, dp, path);
 	}
 	closedir(dr);
-	//if not -f then sort list alphabetically
 	if (!(flags & 16))
 		merge_sort(&initial, flags);
 	else
