@@ -6,7 +6,7 @@
 /*   By: jkwayiba <jkwayiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 11:01:24 by jkwayiba          #+#    #+#             */
-/*   Updated: 2019/09/16 12:46:52 by jkwayiba         ###   ########.fr       */
+/*   Updated: 2020/05/11 10:53:19 by groovyswa        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <time.h>
 # include <pwd.h>
 # include <grp.h>
+# include <errno.h>
 
 
 struct dirent   *dp;
@@ -28,36 +29,71 @@ struct stat     filestat;
 struct passwd   *pass;
 struct group    *grpss;
 
- typedef struct      files {
+typedef struct      files {
     char    *name;
-    int     links;
+    nlink_t     links;
     char    *path;
     char    *user;
     char    *group;
     char    permissions[11];
-    int     filesize;
+    off_t     filesize;
     char    *date;
+    time_t	mtime;
+    int		type;
+    mode_t	mode;
     int     blocks;
     struct     files   *next;
 }   files;
 
 
-void	listfiles(char *path);
-void	listfilesrecursively(char *basepath);
-void	longformat(char *path);
-void    get_uid(struct stat filestat, files *node);
-void    get_guid(struct stat filestat, files *group);
-void    get_perms(struct stat filestat, files *files);
-void    ft_lstcr(files **first, char *path);
-//void    total_blocks(files *node);
-void    print_blocks(files *node);
-files   *items_lst(struct dirent *dp, char *path);
-void    add_list(files **list, struct dirent *dp, char *path);
-void    reverse_list(files **head);
-void    clear_list(files *list);
-void    merge_sort(files **head_ref);
-files   *SortedMerge(files *a, files *b);
-void    FrontBackSplit(files *source, files **front_ref, files **back_ref);
-void    print_dir(files *node);
+/*
+typedef	struct		files {
+	char			*name;
+	mode_t			mode;
+	nlink_t			nlink;
+	char			*uid;
+	char			*gid;
+	off_t			size;
+	time_t			mtime;
+	int				type;
+	int				block;
+	struct files	*next;
+}					files_b;
+*/
+
+//void		listfiles(char *path);
+void		listfilesrecursively(files *list, char *basepath, unsigned char flags);
+void		ft_ls(char *path, unsigned char flags);
+void		longformat(files *list);
+void		print_list(files *list, unsigned char flags);
+void		print_normal(files *list, unsigned char flags);
+void		print_output(files *list, unsigned char flags);
+int			option_execute(int ac, char **av, unsigned char flags);
+char    	*get_uid(struct stat filestat, files *node);
+char    	*get_guid(struct stat filestat, files *node);
+void    	get_perms(struct stat filestat, files *node);
+//void    	ft_lstcr(files **first, char *path);
+//void    	total_blocks(files *node);
+//void    	print_blocks(files *node);
+void		display_blocks(files *ptr, unsigned char flags);
+files   	*items_lst(struct dirent *dp, char *path);
+void    	add_list(files **list, struct dirent *dp, char *path);
+void    	reverse_list(files **head);
+void    	clear_list(files **list);
+void    	merge_sort(files **head_ref, unsigned char flags);
+files   	*SortedMerge(files *a, files *b, unsigned char flags);
+files		*SortedMerge_time(files *a, files *b, unsigned int flags);
+void    	FrontBackSplit(files *source, files **front_ref, files **back_ref);
+//void   		print_dir(files *node);
+int				check_flags(char c);
+unsigned char	get_flags2(unsigned char flags);
+void			illegal_option(char c);
+int				check_if(char c);
+unsigned char	option_parser(int ac, char **av);
+void			error_handler2(char *path);
+void			error_handler_permission(char *path);
+void			error_file(char *path);
+int				error_handler(char *path, DIR *dp, int ierrno, unsigned int flag);
+
 
 #endif

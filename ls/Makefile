@@ -6,11 +6,11 @@ SRC_PATH = ./srcs/
 
 SRCS = file_info.c \
 	   fix_lists.c \
-	   listdir.c \
+	   error_handling.c \
 	   listdiRe.c \
+	   flags.c \
 	   longformat.c \
 	   sorting.c \
-	   print_list.c \
 
 FLAGS = -Wall -Werror -Wextra
 

@@ -1,47 +1,100 @@
 #include "../includes/ft_ls.h"
 
-void	listfilesrecursively(char *basepath)
+void	listfilesrecursively(files *list, char *basepath, unsigned char flags)
 {
-	files *node;
-	struct dirent *dp;
-	DIR *dir = opendir(basepath);
+	files 	*node;
+	char	*s1;
+	char	*s2;
 
-	if (!dir)
-		return ;
-	while ((dp = readdir(dir)) != NULL)
+
+	node = list;
+	if (flags & 4)
+		while (node != NULL)
 	{
-		node = items_lst(dp, basepath);
-		if (dp->d_type == DT_DIR && ft_strcmp(&node->name[0], ".") != 0 &&
-		 ft_strcmp(&node->name[0], "..") != 0)
+		if ((node->type == 4) && (ft_strcmp(node->name, ".") != 0) &&
+		 (ft_strcmp(node->name, "..") != 0))
 		{
-			add_list(&node, dp, basepath);
-			ft_putendl(node->path);
-			longformat(node->path);
-			ft_putchar('\n');
-			listfilesrecursively(node->path);
+			if (!(flags & 2) && (node->name[0] == '.'))
+			{
+				node = node->next;
+				continue ;
+			}
+			s1 = ft_strjoin("/", node->name);
+			s2 = ft_strjoin(basepath, s1);
+			free(s1);
+			ft_ls(s2, flags);
+			free(s2);
 		}
+		node = node->next;
+
 	}
-	clear_list(node);
-	closedir(dir);
+}
+
+void	ft_ls(char *path, unsigned char flags)
+{
+	//struct dirent	*dp;
+	files			*initial;
+	DIR				*dr;
+
+	initial = NULL;
+	dp = NULL;
+	dr = opendir(path);
+	if (error_handler(path, dr, errno, flags) == 1)
+		return ;
+	while ((dp = readdir(dr)))
+	{
+		if (!initial)
+			initial = items_lst(dp, path);
+		else
+			add_list(&initial, dp, path);
+	}
+	closedir(dr);
+	//if not -f then sort list alphabetically
+	if (!(flags & 16))
+		merge_sort(&initial, flags);
+	else
+		reverse_list(&initial);
+	print_output(initial, flags);
+	listfilesrecursively(initial, path, flags);
+	clear_list(&initial);
+}
+
+int		options_execute(int ac, char **av, unsigned char flags)
+{
+	int		i;
+	int		check;
+
+	i = 1;
+	check = 0;
+	while (i < ac)
+	{
+		if (av[i][0] != '-')
+		{
+			ft_ls(av[i], flags);
+			check = 1;
+		}
+		if (av[i][0] == '-' && av[i][1] == '\0')
+			check = 2;
+		i++;
+	}
+	return (check);
 }
 
 
 int		main(int ac, char **av)
 {
-	if (ac == 3)
+	unsigned char	flags;
+	int				check;
+
+	check = 0;
+	flags = option_parser(ac, av);
+	if (ac == 1)
+		ft_ls(".", flags);
+	else
 	{
-		if (ft_strcmp(av[1], "R") == 0)
-		{
-			listfilesrecursively(av[2]);
-		}
-		else if (ft_strcmp(av[1], "l") == 0)
-		{
-			longformat(av[2]);
-		}
-		else if (ft_strcmp(av[1], "  ") == 0)
-		{
-			listfiles(av[2]);
-		}
+		check = options_execute(ac, av, flags);
+		if (check == 0)
+			ft_ls(".", flags);
 	} 
 	return (0);
 }

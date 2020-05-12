@@ -6,7 +6,7 @@
 /*   By: jkwayiba <jkwayiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 17:08:28 by jkwayiba          #+#    #+#             */
-/*   Updated: 2019/09/16 11:20:02 by jkwayiba         ###   ########.fr       */
+/*   Updated: 2020/05/11 09:15:08 by groovyswa        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,40 @@
 
 #include "../includes/ft_ls.h"
 
-
-void    get_uid(struct stat filestat, files *node)
+void	display_blocks(files *ptr, unsigned char flags)
 {
-    pass = getpwuid(filestat.st_uid);
-    if (pass)
-        node->user = ft_strdup(pass->pw_name);
-    //else
-     //   node->user = ft_itoa(pass->pw_name);    
+	int i;
+
+	i = 0;
+	ft_putstr("total ");
+	while (ptr)
+	{
+		if ((ptr->name[0] == '.' && flags & 2) || ptr->name[0] != '.')
+			i += ptr->blocks;
+		ptr = ptr->next;
+	}
+	ft_putnbr(i);
+	ft_putchar('\n');
 }
 
-void   get_guid(struct stat filestat, files *node)
+char    *get_uid(struct stat filestat, files *node)
+{
+    pass = getpwuid(filestat.st_uid);
+    if (pass == NULL)
+    	perror("getpwuid");
+    else
+        return(node->user = ft_strdup(pass->pw_name));
+    return (NULL);   
+}
+
+char	*get_guid(struct stat filestat, files *node)
 {  
     grpss = getgrgid(filestat.st_gid);
-    if (grpss)
-        node->group = ft_strdup(grpss->gr_name);
-    //else
-    //  node->group = ft_itoa(grpss->gr_name);
+    if (grpss == NULL)
+    	perror("getgid");
+    else
+		return (node->group = ft_strdup(grpss->gr_name));
+	return (NULL);
 }
 
 void    get_perms(struct stat filestat, files *node)

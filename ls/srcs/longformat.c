@@ -6,43 +6,78 @@
 /*   By: jkwayiba <jkwayiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 17:08:44 by jkwayiba          #+#    #+#             */
-/*   Updated: 2019/09/10 11:47:32 by jkwayiba         ###   ########.fr       */
+/*   Updated: 2020/05/12 02:07:17 by groovyswa        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
 
-void	longformat(char *path)
+void	longformat(files *list)
 {
-	files	*node;
-	DIR	*dir;
-	
-	dir = opendir(path);
-	if (!dir)
+	if ((S_ISLNK(list->mode)))
+		ft_putstr("l");
+	else
+		ft_putstr(list->permissions);
+	ft_putchar(' ');
+	ft_putnbr(list->links);
+	ft_putchar('\t');
+	ft_putstr(list->user);
+	ft_putchar(' ');
+	ft_putstr(list->group);
+	ft_putchar(' ');
+	ft_putnbr(list->filesize);
+	ft_putchar('\t');
+	ft_putstr(list->date);
+	ft_putchar(' ');
+	ft_putendl(list->name);
+}
+
+void	print_list(files *list, unsigned char flags)
+{
+	files	*ptr;
+	files	*ptr2;
+
+	ptr = list;
+	ptr2 = list;
+	if (flags & 1)
+		display_blocks(ptr2, flags);
+	while (ptr != NULL)
 	{
-		ft_putendl("Error! Unable to open directory.\n");
-		exit(1);
+		if (flags & 2)
+			longformat(ptr); //longformat(ptr, path, flags)
+		else if (ft_strncmp(ptr->name, ".", 1) != 0)
+			longformat(ptr); //longformat(ptr, path, flags)
+		ptr = ptr->next;
 	}
-	while ((dp = readdir(dir)))
+}
+
+void	print_normal(files *list, unsigned char flags)
+{
+	files *ptr;
+
+	ptr = list;
+	while (ptr != NULL)
 	{
-		if (!node)
-		node = items_lst(dp, path);
+		if (flags & 2 || flags & 16)
+		{
+			ft_putendl(ptr->name);
+		}
 		else
-		add_list(&node, dp, path);
-		ft_putstr(node->permissions);
-		ft_putchar(' ');
-		ft_putnbr(node->links);
-		ft_putchar('\t');
-		ft_putstr(node->user);
-		ft_putchar(' ');
-		ft_putstr(node->group);
-		ft_putchar(' ');
-		ft_putnbr(node->filesize);
-		ft_putchar('\t');
-		ft_putstr(node->date);
-		ft_putchar(' ');
-		ft_putendl(node->name);
-		free(node);
+		{
+			if (ptr->name[0] != '.')
+			{
+				ft_putendl(ptr->name);
+			}
+			ptr = ptr->next;
+		}
 	}
-	closedir(dir);
+}
+
+
+void	print_output(files *list, unsigned char flags)
+{
+	if (flags & 1)
+		print_list(list, flags);
+	else
+		print_normal(list, flags);
 }
