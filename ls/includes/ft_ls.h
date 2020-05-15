@@ -23,6 +23,7 @@
 # include <grp.h>
 # include <errno.h>
 
+typedef int    (*comparefunc)(void *a, void *b);
 
 struct dirent   *dp;
 struct stat     filestat;
@@ -30,40 +31,42 @@ struct passwd   *pass;
 struct group    *grpss;
 
 typedef struct      files {
-    char    *name;
+    char        *name;
     nlink_t     links;
-    char    *path;
-    char    *user;
-    char    *group;
-    char    permissions[11];
-    off_t     filesize;
-    char    *date;
-    time_t	mtime;
-    int		type;
-    mode_t	mode;
-    int     blocks;
-    struct     files   *next;
+    char        *path;
+    char        *user;
+    char        *group;
+    char        permissions[11];
+    off_t       filesize;
+    char        *date;
+    time_t	    mtime;
+    int		    type;
+    mode_t	    mode;
+    int         blocks;
+    //struct     files   *next;
 }   files;
 
-void			listfilesrecursively(files *list, char *basepath, unsigned char flags);
+void			listfilesrecursively(t_list *list, void *basepath);
 void			ft_ls(char *path, unsigned char flags);
 void			longformat(files *list);
 void			print_list(files *list, unsigned char flags);
 void			print_normal(files *list, unsigned char flags);
 void			print_output(files *list, unsigned char flags);
 int				option_execute(int ac, char **av, unsigned char flags);
-char    		*get_uid(struct stat filestat, files *node);
-char    		*get_guid(struct stat filestat, files *node);
+char    		*get_uid(struct stat filestat);
+char    		*get_guid(struct stat filestat);
 void    		get_perms(struct stat filestat, files *node);
+
 void			display_blocks(files *ptr, unsigned char flags);
-files   		*items_lst(struct dirent *dp, char *path);
+
+void      		items_lst(files *new, struct dirent *dp, char *path);
 void    		add_list(files **list, struct dirent *dp, char *path);
 void    		reverse_list(files **head);
 void    		clear_list(files **list);
 void    		merge_sort(files **head_ref, unsigned char flags);
-files   		*SortedMerge(files *a, files *b, unsigned char flags);
+t_list   		*SortedMerge(t_list *a, t_list *b, int(*compare)(void *a, void *b));
 files			*SortedMerge_time(files *a, files *b, unsigned int flags);
-void    		FrontBackSplit(files *source, files **front_ref, files **back_ref);
+void    		FrontBackSplit(t_list *source, t_list **front_ref, t_list **back_ref);
 int				check_flags(char c);
 unsigned char	get_flags2(unsigned char flags);
 void			illegal_option(char c);
@@ -74,5 +77,15 @@ void			error_handler_permission(char *path);
 void			error_file(char *path);
 int				error_handler(char *path, DIR *dp, int ierrno, unsigned int flag);
 
+void            file_del(void *data, size_t structsize);
+void            file_print(t_list *data);//file_print(t_list *data, unsigned char flags)
+void            ft_lstmergesort(t_list **head_ref, int(*compare)(void *a, void *b));
+void            recurse(t_list *data, void *pathdata);
+
+int             default_compare(void *a, void *b);
+int             reverse_compare(void *a, void *b);
+int             time_compare(void *a, void *b);
+
+comparefunc     determine_comparison(unsigned char flags);    
 
 #endif

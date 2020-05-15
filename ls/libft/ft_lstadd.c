@@ -1,27 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr_index.c                                  :+:      :+:    :+:   */
+/*   ft_lstadd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkwayiba <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/08/16 12:17:56 by jkwayiba          #+#    #+#             */
-/*   Updated: 2019/08/16 12:19:25 by jkwayiba         ###   ########.fr       */
+/*   Created: 2019/08/12 11:03:53 by jkwayiba          #+#    #+#             */
+/*   Updated: 2019/08/12 13:24:41 by jkwayiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_strchr_index(char *s, int c)
+void	ft_lstadd(t_list **alst, t_list *new)
 {
-	int i;
+	t_list *elem;
 
-	i = 0;
-	while (s[i])
-	{
-		if (s[i] == c)
-			return (i);
-		++i;
-	}
-	return (-1);
+	elem = new;
+	elem->next = *alst;
+	*alst = elem;
 }

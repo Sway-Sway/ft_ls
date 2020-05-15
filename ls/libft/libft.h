@@ -6,7 +6,7 @@
 /*   By: jkwayiba <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/24 09:27:28 by jkwayiba          #+#    #+#             */
-/*   Updated: 2019/08/16 12:20:05 by jkwayiba         ###   ########.fr       */
+/*   Updated: 2019/08/12 12:30:21 by jkwayiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,19 @@
 #include <string.h>
 
 
+typedef	struct	s_list
+{
+	void			*content;
+	size_t			content_size;
+	struct	s_list	*next;
+}					t_list;
+
+t_list	*ft_lstnew(void const *content, size_t content_size);
+void	ft_lstadd(t_list **alst, t_list *new);
+void	ft_lstdel(t_list **alst, void (*del)(void *, size_t));
+void	ft_lstdelone(t_list **alst, void (*del)(void *, size_t));
+void	ft_lstiter(t_list *lst, void(*f)(t_list *elem));
+void	ft_lstiter_data(t_list *lst, void (*f)(t_list *elem, void *data), void *data);
 int		ft_atoi(const char *str);
 void	ft_bzero(void *s, size_t n);
 int		ft_isalnum(int c);
@@ -71,7 +84,6 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 int		ft_strequ(char const *s1, char const *s2);
 int		ft_strnequ(char const *s1, char const *s2, size_t n);
 char	*ft_strsub(char const *s, unsigned int start, size_t len);
-int		ft_strchr_index(char *s, int c);
 size_t	ft_nbrlen(long n);
 void	ft_swap(int *a, int *b);
 char	*ft_strrev(char *str);

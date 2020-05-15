@@ -32,24 +32,36 @@ void	longformat(files *list)
 	ft_putendl(list->name);
 }
 
-void	print_list(files *list, unsigned char flags)
-{
-	files	*ptr;
-	files	*ptr2;
+// void	file_print(t_list *data)
+// {
+// 	files *file;
 
-	ptr = list;
-	ptr2 = list;
-	if (flags & 1)
-		display_blocks(ptr2, flags);
-	while (ptr != NULL)
-	{
-		if (flags & 2)
-			longformat(ptr);
-		else if (ft_strncmp(ptr->name, ".", 1) != 0)
-			longformat(ptr);
-		ptr = ptr->next;
-	}
-}
+// 	file = (files *)data->content;
+	
+// 	if(flag & 2)
+// 		longformat(file);
+// 	else if (ft_strncmp(file->name, ".", 1) != 0)
+// 		longformat(file);
+// }
+
+// void	print_list(files *list, unsigned char flags)
+// {
+// 	files	*ptr;
+// 	files	*ptr2;
+
+// 	ptr = list;
+// 	ptr2 = list;
+// 	if (flags & 1)
+// 		display_blocks(ptr2, flags);
+// 	while (ptr != NULL)
+// 	{
+// 		if (flags & 2)
+// 			longformat(ptr);
+// 		else if (ft_strncmp(ptr->name, ".", 1) != 0)
+// 			longformat(ptr);
+// 		//ptr = ptr->next;
+// 	}
+//}
 
 void	print_normal(files *list, unsigned char flags)
 {
@@ -68,16 +80,16 @@ void	print_normal(files *list, unsigned char flags)
 			{
 				ft_putendl(ptr->name);
 			}
-			ptr = ptr->next;
+		//	ptr = ptr->next;
 		}
 	}
 }
 
 
-void	print_output(files *list, unsigned char flags)
-{
-	if (flags & 1)
-		print_list(list, flags);
-	else
-		print_normal(list, flags);
-}
+// void	print_output(files *list, unsigned char flags)
+// {
+// 	if (flags & 1)
+// 		print_list(list, flags);
+// 	else
+// 		print_normal(list, flags);
+// }

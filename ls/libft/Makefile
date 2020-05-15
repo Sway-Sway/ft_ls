@@ -69,6 +69,12 @@ SRCS = ft_atoi.c \
 	   ft_wordcount.c \
 	   ft_wordlen.c \
 	   ft_strrev.c \
+	   ft_lstnew.c \
+	   ft_lstadd.c \
+	   ft_lstdel.c \
+	   ft_lstdelone.c \
+	   ft_lstiter.c \
+	   ft_lstiter_data.c \
 
 OUTPUT = ft_atoi.o \
 	   ft_bzero.o \
@@ -127,6 +133,12 @@ OUTPUT = ft_atoi.o \
 	   ft_wordcount.o \
 	   ft_wordlen.o \
 	   ft_strrev.o \
+	   ft_lstnew.o \
+	   ft_lstadd.o \
+	   ft_lstdel.o \
+	   ft_lstdelone.o \
+	   ft_lstiter.o \
+	   ft_lstiter_data.o \
 
 all: $(NAME)
 
