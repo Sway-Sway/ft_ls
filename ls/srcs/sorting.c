@@ -12,83 +12,10 @@
 
 #include "../includes/ft_ls.h"
 
-void	merge_sort(files **head_ref, unsigned char flags)
+void	FrontBackSplit(t_list *source, t_list **front_ref, t_list **back_ref)
 {
-	files *head;
-	files *a;
-	files *b;
-
-	head = *head_ref;
-	if ((head == NULL) || (head->next == NULL))
-		return ;
-	FrontBackSplit(head, &a, &b);
-	merge_sort(&a, flags);
-	merge_sort(&b, flags);
-	if (flags & 16)
-		*head_ref = SortedMerge_time(a, b, flags);
-	else
-		*head_ref = SortedMerge(a, b, flags);
-}
-
-files	*SortedMerge(files *a, files *b, unsigned char flags)
-{
-	files *result;
-
-	result = NULL;
-	if (a == NULL)
-		return (b);
-	else if (b == NULL)
-		return (a);
-	if (!(flags & 8) && ((ft_strcmp(a->name, b->name)) < 0))
-	{
-		result = a;
-		result->next = SortedMerge(a->next, b, flags);
-	}
-	else if ((flags & 8) && ((ft_strcmp(a->name, b->name)) > 0))
-	{
-		result = a;
-		result->next = SortedMerge(a->next, b, flags);
-	}
-	else 
-	{
-		result = b;
-		result->next = SortedMerge(a, b->next, flags);
-	}
-	return (result);
-}
-
-files	*SortedMerge_time(files *a, files *b, unsigned int flags)
-{
-	files	*result;
-
-	result = NULL;
-	if (a == NULL)
-		return (b);
-	else if (b == NULL)
-		return (a);
-	if (!(flags & 8) && (a->mtime > b->mtime))
-	{
-		result = a;
-		result->next = SortedMerge_time(a->next, b, flags);
-	}
-	else if ((flags & 8) && (a->mtime < b->mtime))
-	{
-		result = a;
-		result->next = SortedMerge_time(a->next, b, flags);
-	}
-	else
-	{
-		result = b;
-		result->next = SortedMerge_time(a, b->next, flags);
-	}
-	return (result);
-}
-
-
-void	FrontBackSplit(files *source, files **front_ref, files **back_ref)
-{
-	files *fast;
-	files *slow;
+	t_list *fast;
+	t_list *slow;
 
 	slow = source;
 	fast = source->next;
@@ -105,3 +32,45 @@ void	FrontBackSplit(files *source, files **front_ref, files **back_ref)
 	*back_ref = slow->next;
 	slow->next = NULL;
 }
+
+
+ t_list	*SortedMerge(t_list *a, t_list *b, int(*compare)(void *a, void *b))
+ {
+ 	t_list *result;
+	int	comparison;
+
+ 	result = NULL;
+ 	if (a == NULL)
+ 		return (b);
+ 	else if (b == NULL)
+ 		return (a);
+	comparison = (*compare)(a->content, b->content);
+ 	if (comparison <= 0)
+ 	{
+ 		result = a;
+ 		result->next = SortedMerge(a->next, b, compare);
+ 	}
+ 	else 
+ 	{
+		result = b;
+		result->next = SortedMerge(a, b->next, compare);
+	}
+	return (result);
+ }
+
+
+ void	ft_lstmergesort(t_list **head_ref, int (*compare)(void *a, void *b))
+ {
+ 	t_list *head;
+ 	t_list *a;
+ 	t_list *b;
+
+ 	head = *head_ref;
+ 	if ((head == NULL) || (head->next == NULL))
+ 		return ;
+ 	FrontBackSplit(head, &a, &b);
+ 	ft_lstmergesort(&a, compare);
+ 	ft_lstmergesort(&b, compare);
+	*head_ref = SortedMerge(a, b, compare);
+ }
+

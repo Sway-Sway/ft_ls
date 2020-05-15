@@ -11,6 +11,7 @@ SRCS = file_info.c \
 	   flags.c \
 	   longformat.c \
 	   sorting.c \
+	   sorting2.c \
 
 FLAGS = -Wall -Werror -Wextra
 
